@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iris Flower Classifier</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #6a11cb, #2575fc);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+        width: 380px;
+        padding: 25px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        text-align: center;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    h2 {
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    input {
+        width: 90%;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 15px;
+    }
+
+    button {
+        width: 95%;
+        padding: 12px;
+        background: #2575fc;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #6a11cb;
+    }
+
+    .result {
+        margin-top: 15px;
+        padding: 10px;
+        background: #e8f5e9;
+        color: #1b5e20;
+        border-radius: 8px;
+        font-size: 18px;
+        display: none;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+<div class="container">
+    <h2>Iris Flower Classifier 🌸</h2>
+
+    <input type="number" id="sepal_length" placeholder="Sepal Length">
+    <input type="number" id="sepal_width" placeholder="Sepal Width">
+    <input type="number" id="petal_length" placeholder="Petal Length">
+    <input type="number" id="petal_width" placeholder="Petal Width">
+
+    <button onclick="predictFlower()">Predict</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    async function predictFlower() {
+        const data = {
+            sepal_length: parseFloat(document.getElementById("sepal_length").value),
+            sepal_width: parseFloat(document.getElementById("sepal_width").value),
+            petal_length: parseFloat(document.getElementById("petal_length").value),
+            petal_width: parseFloat(document.getElementById("petal_width").value)
+        };
+
+        const resultBox = document.getElementById("result");
+
+        resultBox.innerHTML = "Predicting...";
+        resultBox.style.display = "block";
+
+        const res = await fetch("http://127.0.0.1:5000/predict", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+        resultBox.innerHTML = `Prediction: <strong>${result.prediction}</strong>`;
+    }
+</script>
+
+</body>
+</html>
