@@ -102,7 +102,7 @@
         resultBox.innerHTML = "Predicting...";
         resultBox.style.display = "block";
 
-        const res = await fetch("http://127.0.0.1:5000/predict", {
+        const res = await fetch("https://iris-ml-model-production.up.railway.app/predict", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),

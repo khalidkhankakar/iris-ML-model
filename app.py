@@ -11,8 +11,7 @@ with open("iris_model.pkl", "rb") as file:
 
 @app.route("/")
 def home():
-    # render index.html file
-    return app.send_static_file("index.html")
+    return "🚀 Iris Classification API is Running!"
 
 
 @app.route("/predict", methods=["POST"])
@@ -34,3 +33,6 @@ def predict():
     print(f"Predicted class: {classes[prediction]}")
 
     return jsonify({"prediction": classes[prediction]})
+
+if __name__ == "__main__":
+    app.run(debug=True)
