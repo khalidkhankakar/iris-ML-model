@@ -34,6 +34,3 @@ def predict():
     print(f"Predicted class: {classes[prediction]}")
 
     return jsonify({"prediction": classes[prediction]})
-
-if __name__ == "__main__":
-    app.run(debug=True)
